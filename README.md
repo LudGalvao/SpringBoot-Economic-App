@@ -6,7 +6,7 @@
 git clone url_do_repositorio
 ```
 
-## Baixe as dependeciaa maven
+## Baixe as dependecias maven
 
 ```bash
 mvn clean install
