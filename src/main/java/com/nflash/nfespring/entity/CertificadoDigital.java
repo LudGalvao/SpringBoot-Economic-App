@@ -25,7 +25,7 @@ import lombok.ToString;
 public class CertificadoDigital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "INT", name = "id_usuario", nullable = false)
+    @Column(columnDefinition = "INT", name = "id_certificado", nullable = false)
     private int id;
 
     @ManyToOne
