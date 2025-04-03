@@ -2,6 +2,9 @@ package com.nflash.nfespring.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nflash.nfespring.dto.EnderecoDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -64,4 +67,13 @@ public class Usuario {
 
     @Column(columnDefinition = "JSON", name = "endereco")
     private String endereco;
+
+    public EnderecoDTO getEnderecoDTO() {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(this.endereco, EnderecoDTO.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao converter JSON para EnderecoDTO", e);
+        }
+    }
 }
