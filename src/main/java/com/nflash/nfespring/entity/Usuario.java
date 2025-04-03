@@ -38,7 +38,7 @@ public class Usuario {
     private String senha;
 
     @Column(columnDefinition = "VARCHAR" , length = 14, name = "cpf", nullable = false)
-    private int cpf;
+    private String cpf;
 
     @ManyToOne
     @JoinColumn(name = "tipo_plano_id")
