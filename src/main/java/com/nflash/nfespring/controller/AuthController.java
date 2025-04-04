@@ -16,6 +16,8 @@ import com.nflash.nfespring.entity.Usuario;
 import com.nflash.nfespring.security.JwtUtil;
 import com.nflash.nfespring.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 
 @RestController
@@ -31,6 +33,10 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
+    @Operation(summary = "Registrar novo usuário", responses = {
+        @ApiResponse(responseCode = "200", description = "Usuário registrado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Dados inválidos")
+    })
     @PostMapping("/registro")
     public ResponseEntity<?> registrar(@Valid @RequestBody UsuarioRegistroDTO usuarioDto) {
         Usuario usuario = new Usuario();
@@ -56,6 +62,10 @@ public class AuthController {
         return ResponseEntity.ok("Usuário registrado com sucesso!");
 }
 
+    @Operation(summary = "Login do usuário", responses = {
+        @ApiResponse(responseCode = "200", description = "Login feito com sucesso"),
+        @ApiResponse(responseCode = "401", description = "Crendecias inválidas")
+    })
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UsuarioLoginDTO usuarioLoginDTO) {
         authenticationManager.authenticate(
