@@ -32,6 +32,32 @@ public class UsuarioService implements UserDetailsService{
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario atualizarUsuario(int id, Usuario novoUsuario) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    
+        usuarioExistente.setNome(novoUsuario.getNome());
+        usuarioExistente.setEmail(novoUsuario.getEmail());
+    
+        // Codifica a nova senha, se fornecida
+        if (novoUsuario.getSenha() != null && !novoUsuario.getSenha().isEmpty()) {
+            usuarioExistente.setSenha(passwordEncoder.encode(novoUsuario.getSenha()));
+        }
+    
+        usuarioExistente.setCpf(novoUsuario.getCpf());
+        usuarioExistente.setPlano(novoUsuario.getPlano());
+        usuarioExistente.setUltimoLogin(novoUsuario.getUltimoLogin());
+        usuarioExistente.setAtivo(novoUsuario.isAtivo());
+        usuarioExistente.setRazaoSocial(novoUsuario.getRazaoSocial());
+        usuarioExistente.setNomeFantasia(novoUsuario.getNomeFantasia());
+        usuarioExistente.setTelefone(novoUsuario.getTelefone());
+        usuarioExistente.setEndereco(novoUsuario.getEndereco());
+
+    
+        return usuarioRepository.save(usuarioExistente);
+    }
+    
+
     public Optional<Usuario> buscarPorEmail(String email){
         return usuarioRepository.findByEmail(email);
     }
