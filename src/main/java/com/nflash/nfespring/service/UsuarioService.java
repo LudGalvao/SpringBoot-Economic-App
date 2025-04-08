@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nflash.nfespring.entity.Usuario;
+import com.nflash.nfespring.exception.ResourceNotFoundException;
 import com.nflash.nfespring.repository.UsuarioRepository;
 
 @Service
@@ -38,11 +39,12 @@ public class UsuarioService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
         Usuario usuario = usuarioRepository.findByEmail(email)
-        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
         return User.builder()
-        .username(usuario.getEmail())
-        .password(usuario.getSenha())
-        .roles("USER")
-        .build();
+            .username(usuario.getEmail())
+            .password(usuario.getSenha())
+            .roles("USER")
+            .build();
     }
 }
