@@ -29,7 +29,7 @@ public class SecurityConfig {
                     "/swagger-ui.html",
                     "/auth/registro",  // Permite registro sem autenticação
                     "/auth/login",      // Permite login sem autenticação
-                    "/usuario/editarUsuario/**"
+                    "/api/usuarios/**"    // Permite todas as operações de usuário sem autenticação (para testes)
                 ).permitAll()
                 .anyRequest().authenticated()
             )
