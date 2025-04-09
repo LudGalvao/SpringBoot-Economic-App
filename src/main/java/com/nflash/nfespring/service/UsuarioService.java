@@ -32,7 +32,61 @@ public class UsuarioService implements UserDetailsService{
         return usuarioRepository.save(usuario);
     }
 
-    public Optional<Usuario> buscarPorEmail(String email){
+    public Usuario atualizarUsuario(int id, Usuario novoUsuario) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + id));
+        
+        // Verifica se o CPF foi alterado
+        if (!usuarioExistente.getCpf().equals(novoUsuario.getCpf())) {
+            // Verifica se o novo CPF já existe para outro usuário
+            usuarioRepository.findByCpf(novoUsuario.getCpf()).ifPresent(u -> {
+                if (u.getId() != id) {
+                    throw new IllegalArgumentException("CPF já cadastrado para outro usuário: " + novoUsuario.getCpf());
+                }
+            });
+        }
+        
+        // Verifica se o e-mail foi alterado
+        if (!usuarioExistente.getEmail().equals(novoUsuario.getEmail())) {
+            // Verifica se o novo e-mail já existe para outro usuário
+            usuarioRepository.findByEmail(novoUsuario.getEmail()).ifPresent(u -> {
+                if (u.getId() != id) {
+                    throw new IllegalArgumentException("E-mail já cadastrado para outro usuário: " + novoUsuario.getEmail());
+                }
+            });
+        }
+    
+        usuarioExistente.setNome(novoUsuario.getNome());
+        usuarioExistente.setEmail(novoUsuario.getEmail());
+    
+        // Codifica a nova senha, se fornecida
+        if (novoUsuario.getSenha() != null && !novoUsuario.getSenha().isEmpty()) {
+            usuarioExistente.setSenha(passwordEncoder.encode(novoUsuario.getSenha()));
+        }
+    
+        usuarioExistente.setCpf(novoUsuario.getCpf());
+        usuarioExistente.setPlano(novoUsuario.getPlano());
+        usuarioExistente.setUltimoLogin(novoUsuario.getUltimoLogin());
+        usuarioExistente.setAtivo(novoUsuario.isAtivo());
+        usuarioExistente.setRazaoSocial(novoUsuario.getRazaoSocial());
+        usuarioExistente.setNomeFantasia(novoUsuario.getNomeFantasia());
+        usuarioExistente.setTelefone(novoUsuario.getTelefone());
+        usuarioExistente.setEndereco(novoUsuario.getEndereco());
+
+    
+        return usuarioRepository.save(usuarioExistente);
+    }
+    
+    public void excluirUsuario(int id) {
+        Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com ID: " + id));
+        
+        // Opção 2: Exclusão lógica (alternativa)
+         usuario.setAtivo(false);
+         usuarioRepository.save(usuario);
+    }
+
+    public Optional<Usuario> buscarPorEmail(String email){                  
         return usuarioRepository.findByEmail(email);
     }
 
