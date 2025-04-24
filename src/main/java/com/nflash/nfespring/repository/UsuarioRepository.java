@@ -10,4 +10,5 @@ import com.nflash.nfespring.entity.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     Optional<Usuario> findByEmail(String email);
     Optional<Usuario> findByCpf(String cpf);
+    Optional<Usuario> findByResetToken(String resetToken);
 }
