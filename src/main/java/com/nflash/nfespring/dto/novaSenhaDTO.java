@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class novaSenhaDTO {
+public class NovaSenhaDTO {
     @NotBlank(message = "O token é obrigatório")
     private String token;
 
