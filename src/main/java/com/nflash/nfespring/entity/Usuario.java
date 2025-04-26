@@ -68,6 +68,12 @@ public class Usuario {
     @Column(columnDefinition = "JSON", name = "endereco")
     private String endereco;
 
+    @Column(columnDefinition = "TIMESTAMP", name = "reset_token_expiry")
+    private LocalDateTime resetTokenExpiry;
+
+    @Column(columnDefinition = "VARCHAR", length = 255, name = "reset_token")
+    private String resetToken;
+
     public EnderecoDTO getEnderecoDTO() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();

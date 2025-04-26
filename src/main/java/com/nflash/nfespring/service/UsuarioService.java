@@ -2,6 +2,7 @@ package com.nflash.nfespring.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -88,6 +89,37 @@ public class UsuarioService implements UserDetailsService{
 
     public Optional<Usuario> buscarPorEmail(String email){                  
         return usuarioRepository.findByEmail(email);
+    }
+
+    public String gerarTokenResetSenha(String email){
+        Usuario usuario = usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado com o email: " + email));
+        
+        // Vai gerar um token aleatório UUID
+        String token = UUID.randomUUID().toString();
+
+        usuario.setResetToken(token);
+        usuario.setResetTokenExpiry(LocalDateTime.now().plusHours(24));
+
+        usuarioRepository.save(usuario);
+
+        return token;
+    }
+
+    public void resetarSenha(String token, String novaSenha){
+        Usuario usuario = usuarioRepository.findByResetToken(token)
+            .orElseThrow(() -> new ResourceNotFoundException("Token inválido"));
+        
+            if(usuario.getResetTokenExpiry().isBefore(LocalDateTime.now())){
+                throw new IllegalArgumentException("Token expirado");
+            }
+
+            usuario.setSenha(passwordEncoder.encode(novaSenha));
+
+            usuario.setResetToken(null);
+            usuario.setResetTokenExpiry(null);
+
+            usuarioRepository.save(usuario);
     }
 
     @Override
