@@ -1,4 +1,4 @@
-# SpringBoot-NFlash
+# SpringBoot-Economic-App
 
 ## Clone o repositório
 
