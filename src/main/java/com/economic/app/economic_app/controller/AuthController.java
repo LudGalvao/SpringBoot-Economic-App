@@ -48,7 +48,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
     
-    @PostMapping("/login")
+    @PostMapping("/login") //  "email": "ludadmin@gmail.com", "senha": "Lud123." (ADMIN)
     @Operation(summary = "Realizar login", 
                description = "Endpoint para autenticação de usuário e obtenção de token JWT")
     @ApiResponses(value = {
