@@ -29,7 +29,7 @@ public class CadastrarUsuarioDTO {
     private LocalDate dataNascimento;
     
     @NotBlank(message = "O telefone é obrigatório")
-    @Pattern(regexp = "\\+?[0-9]{10,15}", message = "Formato de telefone inválido")
+    @Pattern(regexp = "^\\+?[0-9\\s\\(\\)\\-]{10,20}$", message = "Formato de telefone inválido")
     private String telefone;
     
     @NotBlank(message = "O sexo é obrigatório")
