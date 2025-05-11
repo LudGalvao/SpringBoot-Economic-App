@@ -39,9 +39,11 @@ public class WebSecurityConfig {
                     .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                     // Endpoints públicos
                     .requestMatchers("/api/auth/**").permitAll()
-                    .requestMatchers("/api/usuarios/**").permitAll()
-                    // Para desenvolvimento/teste, permitir todos os endpoints
-                    .anyRequest().permitAll())
+                    .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                    // Endpoints protegidos
+                    .requestMatchers("/api/contas/**").authenticated()
+                    // Para outros endpoints, exigir autenticação
+                    .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthenticationFilter(), 
                         UsernamePasswordAuthenticationFilter.class)
                 .build();
