@@ -1,9 +1,11 @@
-package com.economic.app.economic_app.service;
+package com.economic.app.economic_app.service.email.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import com.economic.app.economic_app.service.email.EmailService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class EmailService {
+public class EmailServiceImpl implements EmailService {
     
     private final JavaMailSender mailSender;
     
@@ -27,36 +29,7 @@ public class EmailService {
     @Value("${spring.mail.properties.mail.smtp.auth:false}")
     private String smtpAuth;
     
-    /**
-     * Envia um email de recuperação de senha
-     * 
-     * @param destinatario o email do destinatário
-     * @param token o token de recuperação de senha
-     * @param baseUrl a URL base da aplicação
-     */
-    public void enviarEmailRecuperacaoSenha(String destinatario, String token, String baseUrl) {
-        String assunto = "Recuperação de Senha - Economic App";
-        String url = baseUrl + "/redefinir-senha?token=" + token;
-        
-        String conteudo = "Olá,\n\n" +
-                "Você solicitou a recuperação de senha para a sua conta no Economic App.\n\n" +
-                "Para redefinir sua senha, clique no link abaixo:\n" +
-                url + "\n\n" +
-                "Se você não solicitou esta recuperação, por favor ignore este email.\n\n" +
-                "Este link irá expirar em 1 hora.\n\n" +
-                "Atenciosamente,\n" +
-                "Equipe Economic App";
-        
-        enviarEmail(destinatario, assunto, conteudo);
-    }
-    
-    /**
-     * Método genérico para envio de emails
-     * 
-     * @param destinatario o email do destinatário
-     * @param assunto o assunto do email
-     * @param conteudo o conteúdo do email
-     */
+    @Override
     public void enviarEmail(String destinatario, String assunto, String conteudo) {
         try {
             SimpleMailMessage mensagem = new SimpleMailMessage();
@@ -73,7 +46,6 @@ public class EmailService {
         } catch (Exception e) {
             log.error("Erro ao enviar email para {}: {}", destinatario, e.getMessage());
             log.error("Detalhes do erro: ", e);
-            // Lançar exceção para que o controller saiba que houve um erro
             throw new RuntimeException("Falha ao enviar email: " + e.getMessage(), e);
         }
     }

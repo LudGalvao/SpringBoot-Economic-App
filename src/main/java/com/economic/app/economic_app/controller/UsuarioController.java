@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.economic.app.economic_app.dto.CadastrarUsuarioDTO;
 import com.economic.app.economic_app.dto.UsuarioResponseDTO;
 import com.economic.app.economic_app.entity.Usuario;
-import com.economic.app.economic_app.service.UsuarioService;
+import com.economic.app.economic_app.service.usuario.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

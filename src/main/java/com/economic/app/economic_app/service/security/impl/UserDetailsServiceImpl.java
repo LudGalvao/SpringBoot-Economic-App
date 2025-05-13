@@ -1,4 +1,4 @@
-package com.economic.app.economic_app.service;
+package com.economic.app.economic_app.service.security.impl;
 
 import java.util.Collections;
 

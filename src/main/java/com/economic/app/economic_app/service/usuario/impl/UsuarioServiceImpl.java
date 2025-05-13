@@ -1,4 +1,4 @@
-package com.economic.app.economic_app.service;
+package com.economic.app.economic_app.service.usuario.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +10,7 @@ import com.economic.app.economic_app.dto.AtualizarUsuarioDTO;
 import com.economic.app.economic_app.dto.CadastrarUsuarioDTO;
 import com.economic.app.economic_app.entity.Usuario;
 import com.economic.app.economic_app.repository.UsuarioRepository;
+import com.economic.app.economic_app.service.usuario.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
