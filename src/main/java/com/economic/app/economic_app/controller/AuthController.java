@@ -55,9 +55,10 @@ public class AuthController {
             
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = tokenService.gerarToken(authentication);
+            String email = authentication.getName();
             
-            log.info("Usuário autenticado com sucesso: {}", loginDto.getEmail());
-            return ResponseEntity.ok(new TokenDTO(token));
+            log.info("Usuário autenticado com sucesso: {}", email);
+            return ResponseEntity.ok(new TokenDTO(token, email));
         } catch (AuthenticationException e) {
             log.error("Erro na autenticação: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
