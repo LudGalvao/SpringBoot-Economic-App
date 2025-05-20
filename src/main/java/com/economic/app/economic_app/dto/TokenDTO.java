@@ -11,9 +11,11 @@ public class TokenDTO {
     
     private String token;
     private String tipo;
+    private String email;
     
-    public TokenDTO(String token) {
+    public TokenDTO(String token, String email) {
         this.token = token;
         this.tipo = "Bearer";
+        this.email = email;
     }
 } 
