@@ -21,7 +21,7 @@ public class AtualizarUsuarioDTO {
     @Past(message = "A data de nascimento deve ser no passado")
     private LocalDate dataNascimento;
     
-    @Pattern(regexp = "\\+?[0-9]{10,15}", message = "Formato de telefone inválido")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Formato de telefone inválido. Utilize apenas números (10-15 dígitos), opcionalmente com '+' no início")
     private String telefone;
     
     private String sexo;

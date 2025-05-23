@@ -2,6 +2,7 @@ package com.economic.app.economic_app.security;
 
 import java.io.IOException;
 
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -25,9 +26,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request, 
-            HttpServletResponse response, 
-            FilterChain filterChain) throws ServletException, IOException {
+            @NonNull HttpServletRequest request, 
+            @NonNull HttpServletResponse response, 
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
         
         try {
             String jwt = extrairToken(request);
